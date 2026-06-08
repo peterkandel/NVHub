@@ -292,22 +292,6 @@ export const mockProjects: Project[] = [
     status: "Curated",
   },
   {
-    slug: "signal-house",
-    title: "Signal House",
-    creatorName: "Aisha Rahman",
-    creatorUsername: "aisha-rahman",
-    category: "Landing pages",
-    duration: "3:49",
-    views: "49K",
-    likes: "6.1K",
-    comments: "87",
-    publishedAt: "1 week ago",
-    description:
-      "A compact launch page system with rich type, clean sections, and sharp visual rhythm.",
-    tags: ["Brand", "Launch", "Web"],
-    status: "New",
-  },
-  {
     slug: "orbit-garden",
     title: "Orbit Garden",
     creatorName: "Felix Grant",
