@@ -7,8 +7,8 @@ import { ProjectCard } from "@/components/project-card"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Separator } from "@/components/ui/separator"
 import { getCreatorByUsername, getProjectBySlug, mockProjects } from "@/lib/mock-data"
+import { Download, ExternalLink, Eye, Play } from "lucide-react"
 
 type ProjectPageProps = {
   params: Promise<{ slug: string }>
@@ -29,68 +29,190 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   const creator = getCreatorByUsername(project.creatorUsername)
   const relatedProjects = mockProjects.filter((item) => item.slug !== project.slug).slice(0, 3)
 
+  const sourceLinks = [
+    {
+      label: "Live demo",
+      href: `https://example.com/projects/${project.slug}`,
+      description: "Preview the shipped experience.",
+    },
+    {
+      label: "Source code",
+      href: `https://github.com/example/${project.slug}`,
+      description: "Open the mocked repository shell.",
+    },
+    {
+      label: "Design notes",
+      href: `https://notion.so/example/${project.slug}`,
+      description: "Read the planning notes and launch context.",
+    },
+  ]
+
+  const overviewPoints = [
+    `A ${project.category.toLowerCase()} project created by ${project.creatorName}.`,
+    `Published ${project.publishedAt} and already pulling ${project.views} views.`,
+    `Designed to look and feel like a product walkthrough instead of a static card.`,
+  ]
+
+  const problemSolved = [
+    "Gives developers a dedicated surface to showcase projects with the same clarity as a video page.",
+    "Keeps discovery, context, and creator identity on one scrollable detail experience.",
+    "Helps visitors judge the value of a project without leaving the page immediately.",
+  ]
+
+  const features = [
+    "Large demo video placeholder with a product-first frame.",
+    "Clear project story sections for context and decision-making.",
+    "Sticky engagement controls for quick upvote, bookmark, share, and download actions.",
+    "Related project recommendations to extend browsing sessions.",
+  ]
+
+  const techStack = ["Next.js 16 App Router", "React 19", "TypeScript", "Tailwind CSS", ...project.tags]
+
+  const difficulty = project.status === "Featured" || project.status === "Trending" ? "Intermediate" : "Beginner-friendly"
+  const developmentStage = project.status === "New" ? "Early release" : project.status === "Curated" ? "Polished preview" : "Public showcase"
+
   return (
-    <div className="flex flex-col gap-8">
-      <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,0.8fr)]">
-        <div className="space-y-6">
-          <Card className="overflow-hidden border-foreground/10 bg-card shadow-sm">
-            <div className="aspect-video bg-gradient-to-br from-slate-900 via-sky-700 to-cyan-500" />
-            <CardContent className="space-y-5 p-6">
+    <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,0.8fr)]">
+      <div className="space-y-8">
+        <Card className="overflow-hidden border-foreground/10 bg-card shadow-sm">
+          <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-900">
+            <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.18),transparent_30%)]" />
+            <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
               <div className="flex flex-wrap items-center gap-2">
-                <Badge>{project.status}</Badge>
-                <Badge variant="outline">{project.category}</Badge>
-                <Badge variant="outline">{project.duration}</Badge>
+                <Badge className="bg-white/10 text-white">Demo video placeholder</Badge>
+                <Badge variant="outline" className="border-white/10 bg-white/5 text-slate-200">
+                  {project.status}
+                </Badge>
               </div>
-              <div className="space-y-3">
-                <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-                  {project.title}
-                </h1>
-                <p className="max-w-3xl text-base leading-7 text-muted-foreground">
-                  {project.description}
-                </p>
+              <div className="flex items-end justify-between gap-4 text-white">
+                <div className="max-w-2xl space-y-3">
+                  <div className="flex items-center gap-2 text-sm text-slate-300">
+                    <Play className="size-4" />
+                    4 minute demo preview
+                  </div>
+                  <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+                    {project.title}
+                  </h1>
+                  <p className="max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
+                    {project.description}
+                  </p>
+                </div>
+                <div className="hidden rounded-2xl border border-white/10 bg-black/30 p-3 text-right shadow-lg backdrop-blur-sm sm:block">
+                  <div className="text-xs uppercase tracking-[0.24em] text-slate-400">Creator</div>
+                  <div className="mt-1 text-sm font-medium text-white">{project.creatorName}</div>
+                  <div className="mt-2 text-xs text-slate-300">{project.category}</div>
+                </div>
               </div>
-              <div className="flex flex-wrap items-center gap-3 text-sm text-muted-foreground">
-                <span>{project.views} views</span>
-                <span>•</span>
-                <span>{project.likes} likes</span>
-                <span>•</span>
-                <span>{project.publishedAt}</span>
+            </div>
+          </div>
+          <CardContent className="space-y-5 p-6">
+            <div className="flex flex-wrap items-center gap-2 text-sm text-muted-foreground">
+              <span>{project.views} views</span>
+              <span>•</span>
+              <span>{project.likes} upvotes</span>
+              <span>•</span>
+              <span>{project.publishedAt}</span>
+              <span>•</span>
+              <span>{project.duration}</span>
+            </div>
+            <div className="flex flex-wrap gap-2">
+              {project.tags.map((tag) => (
+                <Badge key={tag} variant="secondary">
+                  {tag}
+                </Badge>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
+
+        <div className="grid gap-6">
+          <Card className="border-foreground/10 bg-card shadow-sm">
+            <CardContent className="space-y-4 p-6">
+              <div className="flex items-center gap-2 text-sm font-medium text-cyan-300">
+                <Eye className="size-4" />
+                Overview
               </div>
-              <div className="flex flex-wrap gap-2">
-                {project.tags.map((tag) => (
-                  <Badge key={tag} variant="secondary">
-                    {tag}
-                  </Badge>
-                ))}
-              </div>
+              <p className="text-sm leading-7 text-muted-foreground sm:text-base">
+                {overviewPoints.join(" ")}
+              </p>
             </CardContent>
           </Card>
 
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Card className="border-foreground/10 bg-card shadow-sm">
+              <CardContent className="space-y-4 p-6">
+                <div className="text-sm font-medium text-foreground">Problem solved</div>
+                <div className="space-y-3 text-sm leading-7 text-muted-foreground">
+                  {problemSolved.map((item) => (
+                    <p key={item}>{item}</p>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-foreground/10 bg-card shadow-sm">
+              <CardContent className="space-y-4 p-6">
+                <div className="text-sm font-medium text-foreground">Features</div>
+                <ul className="space-y-3 text-sm leading-7 text-muted-foreground">
+                  {features.map((feature) => (
+                    <li key={feature} className="rounded-2xl bg-muted/40 p-3">
+                      {feature}
+                    </li>
+                  ))}
+                </ul>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="grid gap-6 lg:grid-cols-2">
+            <Card className="border-foreground/10 bg-card shadow-sm">
+              <CardContent className="space-y-4 p-6">
+                <div className="text-sm font-medium text-foreground">Tech stack</div>
+                <div className="flex flex-wrap gap-2">
+                  {techStack.map((item) => (
+                    <Badge key={item} variant="outline" className="bg-background/60">
+                      {item}
+                    </Badge>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+
+            <Card className="border-foreground/10 bg-card shadow-sm">
+              <CardContent className="grid gap-4 p-6 sm:grid-cols-2">
+                <div className="rounded-2xl bg-muted/40 p-4">
+                  <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Difficulty</div>
+                  <div className="mt-2 text-sm font-medium text-foreground">{difficulty}</div>
+                </div>
+                <div className="rounded-2xl bg-muted/40 p-4">
+                  <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Development stage</div>
+                  <div className="mt-2 text-sm font-medium text-foreground">{developmentStage}</div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
           <Card className="border-foreground/10 bg-card shadow-sm">
             <CardContent className="space-y-4 p-6">
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <div>
-                  <div className="text-sm font-medium text-foreground">About this project</div>
-                  <p className="mt-1 text-sm text-muted-foreground">
-                    A watch-page scaffold that can later surface comments, chapters,
-                    attachments, and version history.
-                  </p>
-                </div>
-                <Button asChild variant="outline">
-                  <Link href="/upload">Publish a similar project</Link>
-                </Button>
+              <div className="flex items-center gap-2 text-sm font-medium text-foreground">
+                <Download className="size-4" />
+                Source links
               </div>
-              <Separator />
-              <div className="grid gap-4 sm:grid-cols-3">
-                {[
-                  ["Stack", "Next.js + Tailwind"],
-                  ["Mode", "Static placeholder"],
-                  ["Surface", "Project detail page"],
-                ].map(([label, value]) => (
-                  <div key={label} className="rounded-2xl bg-muted/50 p-4">
-                    <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">{label}</div>
-                    <div className="mt-2 text-sm font-medium text-foreground">{value}</div>
-                  </div>
+              <div className="grid gap-3 lg:grid-cols-3">
+                {sourceLinks.map((source) => (
+                  <a
+                    key={source.label}
+                    href={source.href}
+                    target="_blank"
+                    rel="noreferrer"
+                    className="rounded-2xl border border-foreground/10 bg-background/60 p-4 transition-all duration-200 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-cyan-500/5"
+                  >
+                    <div className="flex items-center justify-between gap-3">
+                      <div className="text-sm font-medium text-foreground">{source.label}</div>
+                      <ExternalLink className="size-4 text-muted-foreground" />
+                    </div>
+                    <p className="mt-2 text-sm leading-6 text-muted-foreground">{source.description}</p>
+                  </a>
                 ))}
               </div>
             </CardContent>
@@ -98,13 +220,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
 
           {creator && <CreatorCard creator={creator} />}
         </div>
-
-        <aside>
-          <ActionSidebar project={project} />
-        </aside>
       </div>
 
-      <section className="space-y-4">
+      <aside>
+        <ActionSidebar project={project} />
+      </aside>
+
+      <section className="space-y-4 lg:col-span-2">
         <div className="flex items-end justify-between gap-4">
           <div>
             <h2 className="text-xl font-semibold text-foreground">Related projects</h2>
