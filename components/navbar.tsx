@@ -16,7 +16,7 @@ export function Navbar() {
           <span className="flex size-10 items-center justify-center rounded-2xl border border-cyan-300/20 bg-gradient-to-br from-cyan-300 via-sky-500 to-indigo-600 text-white shadow-[0_10px_30px_-12px_rgba(56,189,248,0.75)]">
             <Clapperboard className="size-4" />
           </span>
-          <span className="text-sm uppercase tracking-[0.34em] text-slate-200">Kitab Studio</span>
+          <span className="text-sm uppercase tracking-[0.34em] text-slate-200">NVHub</span>
         </Link>
 
         <div className="hidden flex-1 items-center px-4 md:flex">

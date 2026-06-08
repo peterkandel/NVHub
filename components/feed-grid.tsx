@@ -122,7 +122,7 @@ export function FeedGrid({ projects, filters }: FeedGridProps) {
                 Discover developer projects like you discover videos.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
-                Kitab Studio turns launches, demos, and side projects into a feed
+                NVHub turns launches, demos, and side projects into a feed
                 built for browsing, saving, and following what matters.
               </p>
             </div>

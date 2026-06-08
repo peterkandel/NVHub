@@ -19,7 +19,7 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: "Kitab Studio",
+  title: "NVHub",
   description: "A creator-first platform for showcasing developer projects.",
 };
 
