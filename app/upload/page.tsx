@@ -614,9 +614,9 @@ function Field({
   children: React.ReactNode
 }) {
   return (
-    <div className="space-y-2">
-      <label className="text-sm font-medium text-foreground">{label}</label>
+    <label className="space-y-2 text-sm font-medium text-foreground">
+      <span>{label}</span>
       {children}
-    </div>
+    </label>
   )
 }

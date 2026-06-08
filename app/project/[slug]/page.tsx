@@ -11,7 +11,7 @@ import { getCreatorByUsername, getProjectBySlug, mockProjects } from "@/lib/mock
 import { Download, ExternalLink, Eye, Play } from "lucide-react"
 
 type ProjectPageProps = {
-  params: Promise<{ slug: string }>
+  params: { slug: string }
 }
 
 export async function generateStaticParams() {
@@ -224,7 +224,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
       </div>
 
       <aside>
-        <ActionSidebar project={project} />
+        <ActionSidebar />
       </aside>
 
       <section className="space-y-4 lg:col-span-2">

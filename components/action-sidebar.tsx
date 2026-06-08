@@ -2,11 +2,6 @@ import { Bookmark, Download, Share2, ThumbsUp } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { Card, CardContent } from "@/components/ui/card"
-import { Project } from "@/lib/mock-data"
-
-type ActionSidebarProps = {
-  project: Project
-}
 
 const actions = [
   { label: "Upvote", icon: ThumbsUp },
@@ -15,7 +10,7 @@ const actions = [
   { label: "Download", icon: Download },
 ]
 
-export function ActionSidebar({ project }: ActionSidebarProps) {
+export function ActionSidebar() {
   return (
     <div className="sticky top-24 space-y-4">
       <Card className="border-foreground/10 bg-card/90 shadow-sm">

@@ -11,7 +11,7 @@ import { getCreatorByUsername, mockCreators, mockProjects } from "@/lib/mock-dat
 import { Bookmark, CalendarDays, ExternalLink, Heart, LayoutGrid, SquareUserRound } from "lucide-react"
 
 type ProfilePageProps = {
-  params: Promise<{ username: string }>
+  params: { username: string }
 }
 
 export async function generateStaticParams() {
