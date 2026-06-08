@@ -22,6 +22,12 @@ export type Creator = {
   projects: number
   followers: string
   specialty: string
+  joinedAt: string
+  totalUpvotes: string
+  socials: {
+    label: string
+    href: string
+  }[]
 }
 
 export const feedFilters = [
@@ -366,6 +372,13 @@ export const mockCreators: Creator[] = [
     projects: 42,
     followers: "128K",
     specialty: "Design systems",
+    joinedAt: "March 2022",
+    totalUpvotes: "184K",
+    socials: [
+      { label: "Website", href: "https://example.com/maya-singh" },
+      { label: "X", href: "https://x.com/maya-singh" },
+      { label: "Dribbble", href: "https://dribbble.com/maya-singh" },
+    ],
   },
   {
     username: "owen-hart",
@@ -375,6 +388,13 @@ export const mockCreators: Creator[] = [
     projects: 29,
     followers: "94K",
     specialty: "Dev tools",
+    joinedAt: "September 2021",
+    totalUpvotes: "132K",
+    socials: [
+      { label: "Website", href: "https://example.com/owen-hart" },
+      { label: "X", href: "https://x.com/owen-hart" },
+      { label: "GitHub", href: "https://github.com/owen-hart" },
+    ],
   },
   {
     username: "lina-gomez",
@@ -384,6 +404,13 @@ export const mockCreators: Creator[] = [
     projects: 18,
     followers: "76K",
     specialty: "Motion",
+    joinedAt: "January 2023",
+    totalUpvotes: "98K",
+    socials: [
+      { label: "Website", href: "https://example.com/lina-gomez" },
+      { label: "X", href: "https://x.com/lina-gomez" },
+      { label: "Behance", href: "https://behance.net/lina-gomez" },
+    ],
   },
   {
     username: "noah-patel",
@@ -393,6 +420,13 @@ export const mockCreators: Creator[] = [
     projects: 31,
     followers: "103K",
     specialty: "Dashboards",
+    joinedAt: "June 2022",
+    totalUpvotes: "156K",
+    socials: [
+      { label: "Website", href: "https://example.com/noah-patel" },
+      { label: "X", href: "https://x.com/noah-patel" },
+      { label: "LinkedIn", href: "https://linkedin.com/in/noah-patel" },
+    ],
   },
   {
     username: "ari-chen",
@@ -402,6 +436,13 @@ export const mockCreators: Creator[] = [
     projects: 24,
     followers: "61K",
     specialty: "Landing pages",
+    joinedAt: "May 2022",
+    totalUpvotes: "87K",
+    socials: [
+      { label: "Website", href: "https://example.com/ari-chen" },
+      { label: "X", href: "https://x.com/ari-chen" },
+      { label: "Instagram", href: "https://instagram.com/ari-chen" },
+    ],
   },
 ]
 
