@@ -74,9 +74,10 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
   return (
     <div className="grid gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(320px,0.8fr)]">
       <div className="space-y-8">
-        <Card className="overflow-hidden border-foreground/10 bg-card shadow-sm">
+        <Card className="overflow-hidden border-foreground/10 bg-card/90 shadow-sm">
           <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-slate-950 via-slate-900 to-cyan-900">
             <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(255,255,255,0.18),transparent_24%),radial-gradient(circle_at_bottom_left,rgba(34,211,238,0.18),transparent_30%)]" />
+            <div className="absolute inset-0 bg-[linear-gradient(180deg,rgba(15,23,42,0.05),rgba(15,23,42,0.55))]" />
             <div className="absolute inset-0 flex flex-col justify-between p-6 sm:p-8">
               <div className="flex flex-wrap items-center gap-2">
                 <Badge className="bg-white/10 text-white">Demo video placeholder</Badge>
@@ -90,7 +91,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     <Play className="size-4" />
                     4 minute demo preview
                   </div>
-                  <h1 className="text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl">
+                  <h1 className="font-heading text-3xl font-semibold tracking-tight text-balance sm:text-4xl lg:text-5xl">
                     {project.title}
                   </h1>
                   <p className="max-w-2xl text-sm leading-6 text-slate-300 sm:text-base">
@@ -117,7 +118,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </div>
             <div className="flex flex-wrap gap-2">
               {project.tags.map((tag) => (
-                <Badge key={tag} variant="secondary">
+                <Badge key={tag} variant="secondary" className="bg-white/5 text-slate-100">
                   {tag}
                 </Badge>
               ))}
@@ -126,7 +127,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
         </Card>
 
         <div className="grid gap-6">
-          <Card className="border-foreground/10 bg-card shadow-sm">
+          <Card className="border-foreground/10 bg-card/90 shadow-sm">
             <CardContent className="space-y-4 p-6">
               <div className="flex items-center gap-2 text-sm font-medium text-cyan-300">
                 <Eye className="size-4" />
@@ -139,9 +140,9 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </Card>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="border-foreground/10 bg-card shadow-sm">
+            <Card className="border-foreground/10 bg-card/90 shadow-sm">
               <CardContent className="space-y-4 p-6">
-                <div className="text-sm font-medium text-foreground">Problem solved</div>
+                <div className="font-heading text-sm font-semibold text-foreground">Problem solved</div>
                 <div className="space-y-3 text-sm leading-7 text-muted-foreground">
                   {problemSolved.map((item) => (
                     <p key={item}>{item}</p>
@@ -150,12 +151,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </CardContent>
             </Card>
 
-            <Card className="border-foreground/10 bg-card shadow-sm">
+            <Card className="border-foreground/10 bg-card/90 shadow-sm">
               <CardContent className="space-y-4 p-6">
-                <div className="text-sm font-medium text-foreground">Features</div>
+                <div className="font-heading text-sm font-semibold text-foreground">Features</div>
                 <ul className="space-y-3 text-sm leading-7 text-muted-foreground">
                   {features.map((feature) => (
-                    <li key={feature} className="rounded-2xl bg-muted/40 p-3">
+                    <li key={feature} className="rounded-2xl border border-white/10 bg-white/5 p-3 backdrop-blur-sm">
                       {feature}
                     </li>
                   ))}
@@ -165,12 +166,12 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
           </div>
 
           <div className="grid gap-6 lg:grid-cols-2">
-            <Card className="border-foreground/10 bg-card shadow-sm">
+            <Card className="border-foreground/10 bg-card/90 shadow-sm">
               <CardContent className="space-y-4 p-6">
-                <div className="text-sm font-medium text-foreground">Tech stack</div>
+                <div className="font-heading text-sm font-semibold text-foreground">Tech stack</div>
                 <div className="flex flex-wrap gap-2">
                   {techStack.map((item) => (
-                    <Badge key={item} variant="outline" className="bg-background/60">
+                    <Badge key={item} variant="outline" className="border-white/10 bg-white/5 text-slate-100">
                       {item}
                     </Badge>
                   ))}
@@ -178,13 +179,13 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
               </CardContent>
             </Card>
 
-            <Card className="border-foreground/10 bg-card shadow-sm">
+            <Card className="border-foreground/10 bg-card/90 shadow-sm">
               <CardContent className="grid gap-4 p-6 sm:grid-cols-2">
-                <div className="rounded-2xl bg-muted/40 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Difficulty</div>
                   <div className="mt-2 text-sm font-medium text-foreground">{difficulty}</div>
                 </div>
-                <div className="rounded-2xl bg-muted/40 p-4">
+                <div className="rounded-2xl border border-white/10 bg-white/5 p-4">
                   <div className="text-xs uppercase tracking-[0.22em] text-muted-foreground">Development stage</div>
                   <div className="mt-2 text-sm font-medium text-foreground">{developmentStage}</div>
                 </div>
@@ -192,7 +193,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
             </Card>
           </div>
 
-          <Card className="border-foreground/10 bg-card shadow-sm">
+          <Card className="border-foreground/10 bg-card/90 shadow-sm">
             <CardContent className="space-y-4 p-6">
               <div className="flex items-center gap-2 text-sm font-medium text-foreground">
                 <Download className="size-4" />
@@ -205,7 +206,7 @@ export default async function ProjectPage({ params }: ProjectPageProps) {
                     href={source.href}
                     target="_blank"
                     rel="noreferrer"
-                    className="rounded-2xl border border-foreground/10 bg-background/60 p-4 transition-all duration-200 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-cyan-500/5"
+                    className="rounded-2xl border border-white/10 bg-white/5 p-4 transition-all duration-200 hover:-translate-y-1 hover:border-cyan-400/30 hover:bg-cyan-500/5 hover:shadow-[0_16px_35px_-22px_rgba(14,165,233,0.5)]"
                   >
                     <div className="flex items-center justify-between gap-3">
                       <div className="text-sm font-medium text-foreground">{source.label}</div>

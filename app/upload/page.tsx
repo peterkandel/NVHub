@@ -193,7 +193,7 @@ export default function UploadPage() {
 
   return (
     <div className="space-y-8">
-      <section className="overflow-hidden rounded-[2rem] border border-foreground/10 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.14),transparent_34%),radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] p-6 shadow-sm sm:p-8">
+      <section className="overflow-hidden rounded-[2rem] border border-foreground/10 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.14),transparent_34%),radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] p-6 shadow-[0_24px_80px_-48px_rgba(0,0,0,0.9)] sm:p-8">
         <div className="flex flex-wrap items-center gap-2">
           <Badge>Upload workflow</Badge>
           <Badge variant="outline">Frontend only</Badge>
@@ -201,7 +201,7 @@ export default function UploadPage() {
         </div>
         <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.55fr)] lg:items-end">
           <div className="space-y-4">
-            <h1 className="max-w-3xl text-3xl font-semibold tracking-tight text-balance text-foreground sm:text-4xl lg:text-5xl">
+            <h1 className="font-heading max-w-3xl text-3xl font-semibold tracking-tight text-balance text-foreground sm:text-4xl lg:text-5xl">
               Build and publish a project with a guided multi-step flow.
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
@@ -265,7 +265,7 @@ export default function UploadPage() {
                         {isComplete && step.id !== "review" ? <CheckCircle2 className="size-4" /> : <StepIcon className="size-4" />}
                       </div>
                       <div className="space-y-0.5">
-                        <div className="text-sm font-medium text-foreground">{step.title}</div>
+                        <div className="font-heading text-sm font-medium text-foreground">{step.title}</div>
                         <div className="text-xs text-muted-foreground">Step {index + 1}</div>
                       </div>
                     </button>
@@ -276,7 +276,7 @@ export default function UploadPage() {
 
             <div className="grid gap-3 sm:grid-cols-2">
               <div>
-                <div className="text-sm font-medium text-foreground">Current step</div>
+                <div className="font-heading text-sm font-medium text-foreground">Current step</div>
                 <p className="mt-1 text-sm text-muted-foreground">
                   {currentStep + 1}/{stepDefinitions.length} · {activeStep.title}
                 </p>
@@ -455,7 +455,7 @@ export default function UploadPage() {
               <CardContent className="space-y-3 p-4">
                 <div className="flex items-center justify-between gap-4">
                   <div>
-                    <div className="text-sm font-medium text-foreground">Step validation</div>
+                    <div className="font-heading text-sm font-medium text-foreground">Step validation</div>
                     <p className="text-sm text-muted-foreground">{activeStep.description}</p>
                   </div>
                   <Badge variant={activeValidations.every((item) => item.ok) ? "secondary" : "outline"}>
@@ -514,7 +514,7 @@ export default function UploadPage() {
           <Card className="border-foreground/10 bg-card shadow-sm">
             <CardContent className="space-y-4 p-5">
               <div>
-                <div className="text-sm font-medium text-foreground">Progress overview</div>
+                <div className="font-heading text-sm font-medium text-foreground">Progress overview</div>
                 <p className="mt-1 text-sm text-muted-foreground">Track what is complete and what still blocks publishing.</p>
               </div>
               <div className="space-y-2">
@@ -579,7 +579,7 @@ export default function UploadPage() {
 
           <Card className="border-foreground/10 bg-card shadow-sm">
             <CardContent className="space-y-3 p-5">
-              <div className="text-sm font-medium text-foreground">Quick facts</div>
+              <div className="font-heading text-sm font-medium text-foreground">Quick facts</div>
               <div className="grid gap-3 text-sm text-muted-foreground">
                 <div className="flex items-center justify-between gap-4">
                   <span>Difficulty</span>

@@ -30,8 +30,8 @@ function sortProjects(projects: Project[], mode: FeedMode) {
 
 function ProjectCardSkeleton() {
   return (
-    <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-sm">
-      <div className="aspect-video animate-pulse bg-white/10" />
+    <div className="overflow-hidden rounded-[1.5rem] border border-white/10 bg-white/5 shadow-[0_18px_50px_-30px_rgba(0,0,0,0.9)] backdrop-blur-sm">
+      <div className="aspect-video animate-pulse bg-gradient-to-br from-white/10 via-white/5 to-transparent" />
       <div className="space-y-4 p-4">
         <div className="space-y-2">
           <div className="h-4 w-3/4 animate-pulse rounded-full bg-white/10" />
@@ -53,11 +53,11 @@ function ProjectCardSkeleton() {
 
 function EmptyState({ onReset }: { onReset: () => void }) {
   return (
-    <div className="flex min-h-[320px] flex-col items-center justify-center rounded-[2rem] border border-dashed border-white/10 bg-white/5 px-6 py-12 text-center">
+    <div className="flex min-h-[320px] flex-col items-center justify-center rounded-[2rem] border border-dashed border-white/10 bg-white/5 px-6 py-12 text-center shadow-[0_24px_70px_-36px_rgba(0,0,0,0.85)] backdrop-blur-sm">
       <div className="rounded-full border border-white/10 bg-white/10 p-3 text-cyan-300">
         <Search className="size-5" />
       </div>
-      <h3 className="mt-4 text-xl font-semibold text-white">No projects matched</h3>
+      <h3 className="font-heading mt-4 text-xl font-semibold text-white">No projects matched</h3>
       <p className="mt-2 max-w-md text-sm leading-6 text-slate-400">
         Try a different tag, switch the sort order, or clear the search field to
         bring items back into view.
@@ -118,7 +118,7 @@ export function FeedGrid({ projects, filters }: FeedGridProps) {
             </div>
 
             <div className="max-w-3xl space-y-4">
-              <h1 className="balance-text text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
+              <h1 className="font-heading balance-text text-4xl font-semibold tracking-tight text-white sm:text-5xl lg:text-6xl">
                 Discover developer projects like you discover videos.
               </h1>
               <p className="max-w-2xl text-base leading-7 text-slate-300 sm:text-lg">
@@ -192,7 +192,7 @@ export function FeedGrid({ projects, filters }: FeedGridProps) {
               {projects.slice(0, 4).map((project) => (
                 <div
                   key={project.slug}
-                  className="rounded-2xl border border-white/10 bg-slate-950/40 p-3 transition-colors hover:bg-slate-950/70"
+                  className="rounded-2xl border border-white/10 bg-slate-950/40 p-3 transition-all duration-200 hover:-translate-y-0.5 hover:border-cyan-400/25 hover:bg-slate-950/70"
                 >
                   <p className="text-sm font-medium text-white">{project.title}</p>
                   <p className="mt-1 text-xs text-slate-400">{project.creatorName}</p>
@@ -210,7 +210,7 @@ export function FeedGrid({ projects, filters }: FeedGridProps) {
               <TrendingUp className="size-4" />
               Feed controls
             </div>
-            <h2 className="mt-2 text-2xl font-semibold tracking-tight text-white">
+            <h2 className="font-heading mt-2 text-2xl font-semibold tracking-tight text-white">
               Trending, newest, and tag filtering
             </h2>
           </div>
