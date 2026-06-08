@@ -67,7 +67,7 @@ export function UserMenu({ user, notifications, savedProjects }: UserMenuProps) 
           {notifications.length > 0 ? <span className="absolute right-2 top-2 size-2 rounded-full bg-cyan-300 shadow-[0_0_0_3px_rgba(8,15,32,1)]" /> : null}
         </Button>
 
-        <PanelShell open={activePanel === "notifications"} className="right-0 mt-3 w-[24rem]">
+        <PanelShell open={activePanel === "notifications"} className="right-0 mt-3 w-full max-w-[24rem] sm:w-[24rem]">
           <div className="space-y-4">
             <div className="flex items-center justify-between gap-3">
               <div>
@@ -117,7 +117,7 @@ export function UserMenu({ user, notifications, savedProjects }: UserMenuProps) 
           <ChevronDown className="size-4 text-slate-400" />
         </Button>
 
-        <PanelShell open={activePanel === "menu"} className="right-0 mt-3 w-[19rem]">
+        <PanelShell open={activePanel === "menu"} className="right-0 mt-3 w-full max-w-[19rem] sm:w-[19rem]">
           <div className="space-y-4">
             <div className="flex items-center gap-3 rounded-2xl border border-white/10 bg-white/5 p-3">
               <Avatar className="size-10 border border-white/10">
@@ -187,7 +187,7 @@ function PanelShell({
   return (
     <div
       className={cn(
-        "absolute top-full z-50 rounded-[1.4rem] border border-white/10 bg-slate-950/95 p-3 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur-2xl transition-all duration-200",
+        "absolute left-0 top-full z-50 max-w-full rounded-[1.4rem] border border-white/10 bg-slate-950/95 p-3 shadow-[0_30px_80px_-40px_rgba(0,0,0,0.9)] backdrop-blur-2xl transition-all duration-200",
         open ? "pointer-events-auto translate-y-0 scale-100 opacity-100" : "pointer-events-none -translate-y-2 scale-95 opacity-0",
         className
       )}
