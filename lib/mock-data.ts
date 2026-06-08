@@ -39,6 +39,21 @@ export type Creator = {
   }[]
 }
 
+export type Notification = {
+  title: string
+  description: string
+  time: string
+}
+
+export type CurrentUser = {
+  name: string
+  username: string
+  role: string
+  avatarFallback: string
+  savedProjectSlugs: string[]
+  notifications: Notification[]
+}
+
 export const feedFilters = [
   "All",
   "AI tools",
@@ -49,6 +64,40 @@ export const feedFilters = [
   "Open Source",
   "Productivity",
 ]
+
+export const mockCurrentUser: CurrentUser = {
+  name: "Peter",
+  username: "peter",
+  role: "Guest member",
+  avatarFallback: "PT",
+  savedProjectSlugs: [
+    "prompt-harbor",
+    "studio-grid",
+    "lesson-loom",
+    "signal-stack",
+    "delta-kit",
+    "focus-deck",
+    "task-tide",
+    "open-lens",
+  ],
+  notifications: [
+    {
+      title: "Your saved project updated",
+      description: "Prompt Harbor added a new source link and refreshed preview.",
+      time: "5m ago",
+    },
+    {
+      title: "Trending project saved",
+      description: "Studio Grid was added to your bookmarks earlier today.",
+      time: "1h ago",
+    },
+    {
+      title: "New recommendations",
+      description: "Three productivity projects match your saved collection.",
+      time: "Today",
+    },
+  ],
+}
 
 type ProjectSeed = Omit<Project, "thumbnailPath" | "sourceLinks">
 
@@ -1186,4 +1235,10 @@ export function getProjectBySlug(slug: string) {
 
 export function getCreatorByUsername(username: string) {
   return mockCreators.find((creator) => creator.username === username)
+}
+
+export function getProjectsBySlugs(slugs: string[]) {
+  return slugs
+    .map((slug) => getProjectBySlug(slug))
+    .filter((project): project is Project => Boolean(project))
 }

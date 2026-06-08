@@ -1,8 +1,12 @@
 import Link from "next/link"
 import { Clapperboard, Search, Upload } from "lucide-react"
 
+import { UserMenu } from "@/components/user-menu"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
+import { getProjectsBySlugs, mockCurrentUser } from "@/lib/mock-data"
+
+const savedProjectPreview = getProjectsBySlugs(mockCurrentUser.savedProjectSlugs).slice(0, 3)
 
 export function Navbar() {
   return (
@@ -27,15 +31,13 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" size="sm" className="hidden sm:inline-flex text-slate-300 hover:bg-white/5 hover:text-white">
-            <Link href="/profile/maya-singh">Profile</Link>
-          </Button>
           <Button asChild size="sm" className="bg-white text-slate-950 shadow-[0_12px_36px_-18px_rgba(255,255,255,0.8)] hover:bg-slate-200">
             <Link href="/upload">
               <Upload className="size-4" />
               Upload
             </Link>
           </Button>
+          <UserMenu user={mockCurrentUser} notifications={mockCurrentUser.notifications} savedProjects={savedProjectPreview} />
         </div>
       </div>
     </header>
