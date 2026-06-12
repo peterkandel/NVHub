@@ -1,14 +1,20 @@
-import Link from "next/link"
-import { Clapperboard, Search, Upload } from "lucide-react"
+"use client";
 
-import { UserMenu } from "@/components/user-menu"
-import { Button } from "@/components/ui/button"
-import { Input } from "@/components/ui/input"
-import { getProjectsBySlugs, mockCurrentUser } from "@/lib/mock-data"
+import Link from "next/link";
+import { Clapperboard, Search, Upload } from "lucide-react";
+import { useAuth } from "@/lib/auth-context";
 
-const savedProjectPreview = getProjectsBySlugs(mockCurrentUser.savedProjectSlugs).slice(0, 3)
+import { UserMenu } from "@/components/user-menu";
+import { AuthenticatedUserMenu } from "@/components/authenticated-user-menu";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { getProjectsBySlugs, mockCurrentUser } from "@/lib/mock-data";
+
+const savedProjectPreview = getProjectsBySlugs(mockCurrentUser.savedProjectSlugs).slice(0, 3);
 
 export function Navbar() {
+  const { user } = useAuth();
+
   return (
     <header className="sticky top-0 z-40 border-b border-white/10 bg-slate-950/55 backdrop-blur-2xl">
       <div className="mx-auto flex w-full max-w-7xl items-center gap-3 px-4 py-3 sm:px-6 lg:px-8">
@@ -31,13 +37,26 @@ export function Navbar() {
         </div>
 
         <div className="flex items-center gap-2">
-          <Button asChild size="sm" className="bg-white text-slate-950 shadow-[0_12px_36px_-18px_rgba(255,255,255,0.8)] hover:bg-slate-200">
-            <Link href="/upload">
-              <Upload className="size-4" />
-              Upload
-            </Link>
-          </Button>
-          <UserMenu user={mockCurrentUser} notifications={mockCurrentUser.notifications} savedProjects={savedProjectPreview} />
+          {user && (
+            <Button asChild size="sm" className="bg-white text-slate-950 shadow-[0_12px_36px_-18px_rgba(255,255,255,0.8)] hover:bg-slate-200">
+              <Link href="/upload">
+                <Upload className="size-4" />
+                Upload
+              </Link>
+            </Button>
+          )}
+          {user ? (
+            <AuthenticatedUserMenu email={user.email || ""} />
+          ) : (
+            <>
+              <Button asChild variant="outline" size="sm" className="border-white/10 bg-white/5 text-slate-200 hover:bg-white/10">
+                <Link href="/login">Sign In</Link>
+              </Button>
+              <Button asChild size="sm" className="bg-white text-slate-950 shadow-[0_12px_36px_-18px_rgba(255,255,255,0.8)] hover:bg-slate-200">
+                <Link href="/signup">Sign Up</Link>
+              </Button>
+            </>
+          )}
         </div>
       </div>
     </header>

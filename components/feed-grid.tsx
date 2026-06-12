@@ -88,7 +88,7 @@ export function FeedGrid({ projects, filters }: FeedGridProps) {
       const matchesTag = selectedTag === "All" || project.tags.includes(selectedTag)
       const matchesSearch =
         normalizedSearch.length === 0 ||
-        [project.title, project.creatorName, project.category, project.description, ...project.tags]
+        [project.title, project.creatorName, project.category ?? "", project.description, ...project.tags]
           .join(" ")
           .toLowerCase()
           .includes(normalizedSearch)

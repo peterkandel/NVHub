@@ -1,8 +1,5 @@
-import { FeedGrid } from "@/components/feed-grid"
-import { feedFilters, mockProjects } from "@/lib/mock-data"
+import { FeedList } from "@/components/feed-list"
 
 export default function Home() {
-  return (
-    <FeedGrid projects={mockProjects} filters={feedFilters} />
-  );
+  return <FeedList />
 }

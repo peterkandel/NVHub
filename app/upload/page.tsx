@@ -1,6 +1,7 @@
 "use client"
 
 import { useMemo, useState } from "react"
+import { useRouter } from "next/navigation"
 
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
@@ -93,7 +94,7 @@ const initialState: WorkflowState = {
   difficulty: "Intermediate",
   liveUrl: "",
   repoUrl: "",
-  notes: "Frontend-only workflow with draft, validation, and review states.",
+  notes: "Publish-ready workflow with draft, validation, and review states.",
 }
 
 const difficultyNotes: Record<Difficulty, string> = {
@@ -116,10 +117,12 @@ function isValidUrl(value: string) {
 }
 
 export default function UploadPage() {
+  const router = useRouter()
   const [currentStep, setCurrentStep] = useState(0)
   const [state, setState] = useState(initialState)
   const [savedLabel, setSavedLabel] = useState("Draft not saved yet")
-  const [published, setPublished] = useState(false)
+  const [serverError, setServerError] = useState<string | null>(null)
+  const [isSubmitting, setIsSubmitting] = useState(false)
 
   const validations = useMemo(() => {
     const stackItems = parseStackItems(state.stack)
@@ -184,11 +187,51 @@ export default function UploadPage() {
     setSavedLabel(`Draft saved locally at ${new Date().toLocaleTimeString([], { hour: "numeric", minute: "2-digit" })}`)
   }
 
-  const handlePublish = () => {
-    if (!isWorkflowReady) return
-    setPublished(true)
-    setSavedLabel("Published locally in frontend-only mode")
-    setCurrentStep(stepDefinitions.length - 1)
+  const handlePublish = async () => {
+    if (!isWorkflowReady || isSubmitting) return
+
+    setServerError(null)
+    setIsSubmitting(true)
+
+    try {
+      const response = await fetch("/api/projects", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          title: state.title,
+          slug: state.slug,
+          description: state.description,
+          problem: state.problem,
+          stack: state.stack,
+          difficulty: state.difficulty,
+          demoVideoUrl: state.demoVideoUrl,
+        }),
+      })
+
+      const payload = await response.json().catch(() => null)
+
+      if (!response.ok) {
+        setServerError(
+          payload?.error || "Unable to publish project. Please try again."
+        )
+        return
+      }
+
+      if (!payload?.slug) {
+        setServerError("Unexpected publish response. Please try again.")
+        return
+      }
+
+      router.push(`/project/${payload.slug}`)
+    } catch (error) {
+      setServerError(
+        error instanceof Error ? error.message : "Unable to publish project."
+      )
+    } finally {
+      setIsSubmitting(false)
+    }
   }
 
   return (
@@ -196,7 +239,7 @@ export default function UploadPage() {
       <section className="overflow-hidden rounded-[2rem] border border-foreground/10 bg-[radial-gradient(circle_at_top_left,rgba(34,211,238,0.14),transparent_34%),radial-gradient(circle_at_top_right,rgba(59,130,246,0.14),transparent_28%),linear-gradient(180deg,rgba(255,255,255,0.02),transparent)] p-6 shadow-[0_24px_80px_-48px_rgba(0,0,0,0.9)] sm:p-8">
         <div className="flex flex-wrap items-center gap-2">
           <Badge>Upload workflow</Badge>
-          <Badge variant="outline">Frontend only</Badge>
+          <Badge variant="outline">Supabase-backed publish</Badge>
           <Badge variant="outline">Validation ready</Badge>
         </div>
         <div className="mt-5 grid gap-6 lg:grid-cols-[minmax(0,1.4fr)_minmax(280px,0.55fr)] lg:items-end">
@@ -206,7 +249,7 @@ export default function UploadPage() {
             </h1>
             <p className="max-w-2xl text-base leading-7 text-muted-foreground sm:text-lg">
               Collect project details, validate the content, and review the final package before publishing.
-              The entire experience is local state only, designed to feel production-ready without a backend.
+              When ready, the form will submit to Supabase and redirect to the published project page.
             </p>
           </div>
           <Card className="border-foreground/10 bg-background/75 shadow-sm backdrop-blur">
@@ -287,9 +330,14 @@ export default function UploadPage() {
               </div>
             </div>
 
-            {published ? (
-              <div className="rounded-2xl border border-emerald-400/25 bg-emerald-500/8 p-4 text-sm text-emerald-200">
-                Published locally. This route stays frontend-only, so the success state is visual and persistent only for this session.
+            {serverError ? (
+              <div className="rounded-2xl border border-destructive/30 bg-destructive/10 p-4 text-sm text-destructive">
+                {serverError}
+              </div>
+            ) : null}
+            {isSubmitting ? (
+              <div className="rounded-2xl border border-cyan-400/25 bg-cyan-500/10 p-4 text-sm text-cyan-200">
+                Publishing your project to Supabase...
               </div>
             ) : null}
 
@@ -433,8 +481,8 @@ export default function UploadPage() {
                     <Card className="border-foreground/10 bg-background/60">
                       <CardContent className="space-y-2 p-4">
                         <div className="text-xs uppercase tracking-[0.2em] text-muted-foreground">Publish mode</div>
-                        <div className="text-sm font-medium text-foreground">Frontend-only review</div>
-                        <p className="text-sm text-muted-foreground">All changes stay local until you connect a backend.</p>
+                        <div className="text-sm font-medium text-foreground">Database-backed publish</div>
+                        <p className="text-sm text-muted-foreground">Submissions are sent to Supabase and rendered from the published project route.</p>
                       </CardContent>
                     </Card>
                   </div>
@@ -501,8 +549,8 @@ export default function UploadPage() {
                     <ChevronRight className="size-4" />
                   </Button>
                 ) : (
-                  <Button onClick={handlePublish} disabled={!isWorkflowReady}>
-                    {isWorkflowReady ? "Publish project" : "Resolve validation"}
+                  <Button onClick={handlePublish} disabled={!isWorkflowReady || isSubmitting}>
+                    {isSubmitting ? "Publishing..." : isWorkflowReady ? "Publish project" : "Resolve validation"}
                   </Button>
                 )}
               </div>
@@ -595,7 +643,7 @@ export default function UploadPage() {
                 </div>
                 <div className="flex items-center justify-between gap-4">
                   <span>Publish state</span>
-                  <span className="text-foreground">{published ? "Published locally" : "Draft mode"}</span>
+                  <span className="text-foreground">{isSubmitting ? "Publishing..." : "Ready to publish"}</span>
                 </div>
               </div>
             </CardContent>
